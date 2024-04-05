@@ -63,7 +63,6 @@ export default function HomePage() {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    {/* TODO: Fix this field validation somehow */}
                     <Textarea className="resize-none" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -77,7 +76,7 @@ export default function HomePage() {
                 <FormItem>
                   <FormLabel>Age</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="number" {...field} onChange={event => field.onChange(+ event.target.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
