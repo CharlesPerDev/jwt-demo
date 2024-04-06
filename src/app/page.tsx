@@ -9,10 +9,10 @@ import { GenerationForm } from "./generation-form";
 import { ValidationForm } from "./validation-form";
 
 export default function HomePage() {
-  let [generatedJwt, setGeneratedJwt] = useState("");
+  const [generatedJwt, setGeneratedJwt] = useState("");
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-[#6ed8d8] to-[#00ffaa]">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-[#06a4e2] to-[#00ffaa]">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <Tabs defaultValue="generation" className="w-full max-w-prose drop-shadow-2xl">
           <TabsList className="w-full">
