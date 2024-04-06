@@ -22,9 +22,9 @@ import generateToken from "@/components/server/requestToken";
 
 export default function HomePage() {
   const formSchema = z.object({
-    username: z.string().min(1).max(128),
-    description: z.string().min(0).max(512),
-    age: z.number().int().finite().max(200),
+    username: z.string().min(1, {message: "Username must contain at least one character"}).max(128, "Username can't be longer than 128 characters"),
+    description: z.string().max(512, {message: "Description can't be longer than 512 characters"}),
+    age: z.number().int().finite().max(150, {message: "Age can't be more than 150"}),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
