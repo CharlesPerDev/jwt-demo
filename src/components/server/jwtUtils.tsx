@@ -19,6 +19,8 @@ const generateToken = async ({ username, description, age }: TokenProps) => {
   })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
+    .setIssuer(process.env.PUBLIC_ORIGIN ?? "UNKNOWN")
+    .setSubject(username)
     .setExpirationTime("7D")
     .sign(secret);
 
