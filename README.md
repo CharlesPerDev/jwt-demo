@@ -1,29 +1,23 @@
-# Create T3 App
+# JWT Demo
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a small demo of JWT behavior built on the [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-## What's next? How do I make an app with this?
+## Getting started
+It's fairly straightforward. You only need [Node](https://nodejs.org/) and either a git CLI or GUI to get started.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### Preparing the project
+1. Clone the project in the desired folder: `git clone https://github.com/Charlis70/jwt-demo.git`
+2. Inside the project's folder, install the dependencies with `npm i`
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### Configuring the environment variables
+  1. Duplicate the `.env.example` file and rename the duplicate to `.env`
+  2. Choose the secret with which to sign JWT tokens by setting the `JWT_SECRET` environment variable to your desired value
+  3. If you are running this on a separate domain from the one the site will be accessed on, you'll want to set the `PUBLIC_ORIGIN` environment variable by following this structure: `SUBDOMAINS.DOMAIN.EXTENSION`
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
-
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### Running the project
+- Dev mode: `npm run dev`
+- Prod mode:
+  ```
+  npm run build
+  npm run start
+  ```
