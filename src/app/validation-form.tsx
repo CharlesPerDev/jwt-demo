@@ -36,7 +36,7 @@ const ValidationForm = () => {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        decodeToken(values.jwt).then(x => setDecodedToken(x)).then(() => setIsDialogOpen(true))
+        void decodeToken(values.jwt).then(x => setDecodedToken(x)).then(() => setIsDialogOpen(true))
     }
 
     return (<div>
@@ -79,7 +79,7 @@ const ValidationForm = () => {
                                 <Label htmlFor="age-val">Age</Label>
                                 <Input readOnly id="age-val" value={decodedToken.payload.age} />
                             </div>
-                            <p className="text-center">This JWT is {decodedToken.isValid ? <span className="text-green-500 font-bold">Valid</span> : <span className="text-red-500 font-bold">Invalid</span>} according to the server's secret key</p>
+                            <p className="text-center">This JWT is {decodedToken.isValid ? <span className="text-green-500 font-bold">Valid</span> : <span className="text-red-500 font-bold">Invalid</span>} according to the server&#39;s secret key</p>
                         </div>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

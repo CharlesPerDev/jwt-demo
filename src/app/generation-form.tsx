@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { generateToken } from "@/components/server/jwtUtils";
 
 
-const GenerationForm = (props: { setGeneratedJwt: (jwt: string) => any; }) => {
+const GenerationForm = (props: { setGeneratedJwt: (jwt: string) => void; }) => {
     const formSchema = z.object({
         username: z.string().min(1, { message: "Username must contain at least one character" }).max(128, "Username can't be longer than 128 characters"),
         description: z.string().max(512, { message: "Description can't be longer than 512 characters" }),
@@ -31,7 +31,7 @@ const GenerationForm = (props: { setGeneratedJwt: (jwt: string) => any; }) => {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        generateToken(values).then((token) => props.setGeneratedJwt(token));
+        void generateToken(values).then((token) => props.setGeneratedJwt(token));
     }
 
     return (<Form {...form}>

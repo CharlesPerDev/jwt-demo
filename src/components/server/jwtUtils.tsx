@@ -12,7 +12,7 @@ interface TokenProps {
   age: number;
 }
 
-const generateToken = async ({ username, description, age }: TokenProps) => {
+const generateToken = async ({ username, description, age }: TokenProps): Promise<string> => {
   const token = await new SignJWT({
     username: username,
     description: description,
@@ -39,7 +39,7 @@ const decodeToken = async (jwt: string) => {
   };
 
   try {
-    let verifiedJwt = await jwtVerify(jwt, secret);
+    const verifiedJwt = await jwtVerify(jwt, secret);
 
     jsonStructure = {
       isValid: true,
@@ -51,7 +51,7 @@ const decodeToken = async (jwt: string) => {
     };
   } catch (e) {
     if (e instanceof JWSSignatureVerificationFailed) {
-      let jwtPayload = decodeJwt(jwt);
+      const jwtPayload = decodeJwt(jwt);
 
       jsonStructure = {
         isValid: false,
