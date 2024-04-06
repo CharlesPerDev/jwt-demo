@@ -25,4 +25,8 @@ const generateToken = async ({ username, description, age }: TokenProps) => {
   return token;
 };
 
-export default generateToken;
+const decodeToken = async () => {
+
+}
+
+export { generateToken, decodeToken };
