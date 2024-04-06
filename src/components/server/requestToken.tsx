@@ -5,13 +5,13 @@ import { SignJWT } from "jose";
 const encoder = new TextEncoder();
 const secret = encoder.encode(process.env.JWT_SECRET);
 
-interface getTokenProps {
+interface TokenProps {
   username: string;
   description: string;
   age: number;
 }
 
-const getToken = async ({ username, description, age }: getTokenProps) => {
+const generateToken = async ({ username, description, age }: TokenProps) => {
   const token = await new SignJWT({
     username: username,
     description: description,
@@ -25,4 +25,4 @@ const getToken = async ({ username, description, age }: getTokenProps) => {
   return token;
 };
 
-export default getToken;
+export default generateToken;
