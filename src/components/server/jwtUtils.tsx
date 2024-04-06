@@ -1,6 +1,7 @@
 "use server";
 
-import { SignJWT } from "jose";
+import { SignJWT, decodeJwt, jwtVerify } from "jose";
+import { JWSSignatureVerificationFailed } from "jose/errors";
 
 const encoder = new TextEncoder();
 const secret = encoder.encode(process.env.JWT_SECRET);
@@ -27,8 +28,52 @@ const generateToken = async ({ username, description, age }: TokenProps) => {
   return token;
 };
 
-const decodeToken = async () => {
+const decodeToken = async (jwt: string) => {
+  let jsonStructure: {
+    isValid: boolean,
+    payload: {
+      username: string,
+      description: string,
+      age: number
+    }
+  };
 
+  try {
+    let verifiedJwt = await jwtVerify(jwt, secret);
+
+    jsonStructure = {
+      isValid: true,
+      payload: {
+        username: String(verifiedJwt.payload.username),
+        description: String(verifiedJwt.payload.description),
+        age: Number(verifiedJwt.payload.age),
+      },
+    };
+  } catch (e) {
+    if (e instanceof JWSSignatureVerificationFailed) {
+      let jwtPayload = decodeJwt(jwt);
+
+      jsonStructure = {
+        isValid: false,
+        payload: {
+          username: String(jwtPayload.username) ?? "N/A",
+          description: String(jwtPayload.description) ?? "N/A",
+          age: Number(jwtPayload.age) ?? "N/A",
+        },
+      };
+    } else {
+      jsonStructure = {
+        isValid: false,
+        payload: {
+          username: "N/A",
+          description: "N/A",
+          age: -1,
+        },
+      };
+    }
+  }
+
+  return jsonStructure;
 }
 
 export { generateToken, decodeToken };

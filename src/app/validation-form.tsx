@@ -11,10 +11,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
-import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { decodeToken } from "@/components/server/jwtUtils";
 
 const ValidationForm = () => {
     const formSchema = z.object({
@@ -25,11 +26,17 @@ const ValidationForm = () => {
     });
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [decodedToken, setDecodedToken] = useState();
+    const [decodedToken, setDecodedToken] = useState({
+        isValid: false,
+        payload: {
+            username: "",
+            description: "",
+            age: 0,
+        }
+    });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        setIsDialogOpen(true);
-        console.log(values);
+        decodeToken(values.jwt).then(x => setDecodedToken(x)).then(() => setIsDialogOpen(true))
     }
 
     return (<div>
@@ -56,11 +63,24 @@ const ValidationForm = () => {
         </Form>
         <div>
             <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <AlertDialogContent>
+                <AlertDialogContent className="flex flex-col gap-8">
                     <AlertDialogHeader>
                         <AlertDialogTitle>Validation information</AlertDialogTitle>
-                        <AlertDialogDescription>
-                        </AlertDialogDescription>
+                        <div className="flex flex-col gap-8">
+                            <div>
+                                <Label htmlFor="username-val">Username</Label>
+                                <Input readOnly id="username-val" value={decodedToken.payload.username} />
+                            </div>
+                            <div>
+                                <Label htmlFor="description-val">Description</Label>
+                                <Textarea readOnly id="description-val" value={decodedToken.payload.description} />
+                            </div>
+                            <div>
+                                <Label htmlFor="age-val">Age</Label>
+                                <Input readOnly id="age-val" value={decodedToken.payload.age} />
+                            </div>
+                            <p className="text-center">This JWT is {decodedToken.isValid ? <span className="text-green-500 font-bold">Valid</span> : <span className="text-red-500 font-bold">Invalid</span>} according to the server's secret key</p>
+                        </div>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Close</AlertDialogCancel>
